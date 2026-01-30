@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Timesheet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 20px;
+        }
+
+        form {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-top: 30px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 8px;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        select,
+        input[type="text"] {
+            padding: 8px;
+            margin-top: 5px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input[type="date"],
+        input[type="time"] {
+            padding: 8px;
+            margin-top: 5px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: text;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            padding: 5px;
+            background: #007bff;
+            border-radius: 3px;
+            opacity: 0.8;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator:hover,
+        input[type="time"]::-webkit-calendar-picker-indicator:hover {
+            opacity: 1;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .day {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 6px;
+            background: #fafafa;
+        }
+
+        .day h3 {
+            margin: 0 0 15px 0;
+            color: #007bff;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 8px;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .row > div {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .second-shift {
+            display: none;
+            margin-top: 10px;
+            background: #e8f4ff;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid #007bff;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            margin-top: 12px;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        button[type="submit"] {
+            margin-top: 30px;
+            padding: 14px;
+            font-size: 16px;
+            width: 100%;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background: #0056b3;
+        }
+
+        .input-hint {
+            font-size: 11px;
+            color: #666;
+            margin-top: 3px;
+            font-weight: normal;
+        }
+
+        .employee-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form method="POST" action="https://webhook.site/18bd88aa-d025-4bd5-af34-382ccdcc10c9" onsubmit="return handleSubmit(event)">
+
+        <h2>📋 Employee Details</h2>
+        <div class="employee-section">
+            <label>Employee Name</label>
+            <input type="text" name="employee_name" placeholder="Enter full name" required>
+
+            <label>Client Name</label>
+            <select id="client" name="client" required>
+                <option value="">Select Client</option>
+                <option value="AHRC_NYC">AHRC NYC</option>
+                <option value="AHRC_SUFFOLK">AHRC Suffolk</option>
+                <option value="UCP_HOUSES_SUFFOLK_COUNTY">UCP Houses Suffolk County</option>
+                <option value="LIFESPIRE">Lifespire</option>
+            </select>
+
+            <label>House Name</label>
+            <select id="house" name="house" required>
+                <option value="">First select a client</option>
+            </select>
+        </div>
+
+        <h2>📅 Weekly Shifts</h2>
+        <p style="color: #666; font-size: 14px; margin-top: 5px;">
+            You can type dates (MM/DD/YYYY) and times (HH:MM AM/PM) directly, or click the icons to use the picker.
+        </p>
+
+        <div id="daysContainer"></div>
+
+        <button type="submit">✓ Submit Timesheet</button>
+    </form>
+
+    <script>
+        // Prevent Enter key from submitting the form
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            
+            // Prevent Enter key submission on all inputs except submit button
+            form.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && e.target.type !== 'submit') {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            // Alternative: Listen on all inputs
+            const inputs = form.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        return false;
+                    }
+                });
+            });
+        });
+
+        // Handle form submission
+        function handleSubmit(event) {
+            const employeeName = document.querySelector('input[name="employee_name"]').value;
+            const client = document.querySelector('select[name="client"]').value;
+            const house = document.querySelector('select[name="house"]').value;
+
+            if (!employeeName || !client || !house) {
+                event.preventDefault();
+                alert('Please fill in Employee Name, Client, and House before submitting.');
+                return false;
+            }
+
+            // Check if at least one day has data
+            let hasData = false;
+            days.forEach(day => {
+                const date = document.querySelector(`input[name="${day}_date"]`).value;
+                if (date) hasData = true;
+            });
+
+            if (!hasData) {
+                event.preventDefault();
+                alert('Please enter at least one day of timesheet data.');
+                return false;
+            }
+
+            return true; // Allow submission
+        }
+
+        // Generate days dynamically
+        const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        const container = document.getElementById('daysContainer');
+
+        days.forEach(day => {
+            const dayDiv = document.createElement('div');
+            dayDiv.className = 'day';
+            dayDiv.innerHTML = `
+                <h3>${day}</h3>
+
+                <label>Date</label>
+                <input 
+                    type="date" 
+                    name="${day}_date"
+                    placeholder="MM/DD/YYYY or use calendar"
+                >
+                <div class="input-hint">Type manually (e.g., 01/20/2026) or click calendar icon</div>
+
+                <div class="row">
+                    <div>
+                        <label>Shift 1 Start Time</label>
+                        <input 
+                            type="time" 
+                            name="${day}_shift1_start"
+                            placeholder="HH:MM AM/PM"
+                        >
+                        <div class="input-hint">Type (e.g., 08:00 AM) or use clock</div>
+                    </div>
+                    <div>
+                        <label>Shift 1 End Time</label>
+                        <input 
+                            type="time" 
+                            name="${day}_shift1_end"
+                            placeholder="HH:MM AM/PM"
+                        >
+                        <div class="input-hint">Type (e.g., 04:00 PM) or use clock</div>
+                    </div>
+                </div>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" name="${day}_double_shift" onchange="toggleSecondShift(this, '${day}')">
+                    Double Shift (worked two separate shifts this day)
+                </label>
+
+                <div class="second-shift" id="${day}_second_shift">
+                    <strong style="display: block; margin-bottom: 10px; color: #007bff;">Second Shift</strong>
+                    <div class="row">
+                        <div>
+                            <label>Shift 2 Start Time</label>
+                            <input 
+                                type="time" 
+                                name="${day}_shift2_start"
+                                placeholder="HH:MM AM/PM"
+                                disabled
+                            >
+                        </div>
+                        <div>
+                            <label>Shift 2 End Time</label>
+                            <input 
+                                type="time" 
+                                name="${day}_shift2_end"
+                                placeholder="HH:MM AM/PM"
+                                disabled
+                            >
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(dayDiv);
+        });
+
+        // Toggle second shift
+        function toggleSecondShift(checkbox, day) {
+            const secondShift = document.getElementById(`${day}_second_shift`);
+            const inputs = secondShift.querySelectorAll('input');
+            
+            if (checkbox.checked) {
+                secondShift.style.display = 'block';
+                inputs.forEach(input => input.disabled = false);
+            } else {
+                secondShift.style.display = 'none';
+                inputs.forEach(input => {
+                    input.disabled = true;
+                    input.value = '';
+                });
+            }
+        }
+
+        // Client-House mapping
+        const clientHouseMap = {
+            AHRC_NYC: ["400 Ocean Pkwy", "Gruenstein", "New Gotham", "Harbor", "Munson IRA", "34th st", "Silvercrest Center",
+                "Laguna Lane IRA", "Lander IRA", "31st Drive", "The Grand Rehabilitation and Nursing", "Chicquor IRA",
+                "204th St IRA", "95th St", "Rubin residence", "Barnabas Hospital", "Fresh Meadow Lane", "Fairfield",
+                "Bober IRA", "Agovino ICF", "Jacobi Hospital", "Isaacson", "Wilson IRA", "169th IRA", "Crisis",
+                "Vanderbilt Rehabilitation and Care Center", "Carubia IRA", "Glen oaks IRA", "Midwood", "Vyse",
+                "Netherland IRA", "College Point IRA", "Fineson IRA", "Gus Jacobs IRA", "159th IRA", "10th St IRA",
+                "163rd St", "186th St", "194th St IRA", "213th Bayside IRA", "58th IRA", "79th IRA", "Armstrong IRA",
+                "Bellrose IRA", "Bloomberg", "Cunningham", "Dickson Goodman", "Greenberg IRA", "Hirsch IRA", "Hunter IRA",
+                "Kraus", "Malozemoff", "Manhattan", "Mayflower IRA", "North Hills", "Pembroke", "Peterson residence",
+                "Rupert Towers IRA", "Striar IRA", "Tysens Lane IRA", "Union Tpke IRA", "Presbyterian Hospital", "Fierstein",
+                "Rossi IRA", "Jamaica Hospital", "Kensington IRA"
+            ],
+            AHRC_SUFFOLK: ["Waverly IRA", "Westhampton IRA", "Hamilton IRA", "Old field", "Westhampton ICF", "Shirley IRA", 
+                "Roanoke", "Tupper IRA", "Bellport IRA", "CENTEREACH", "Hawthorne", "Oakdale 2 IRA", "Mount Sinai", 
+                "Oakdale 1", "CENTRAL ISLIP", "Yaphank", "Bay Shore", "CORAM", "Holbrook", "DIX HILLS", "Southold"],
+            UCP_HOUSES_SUFFOLK_COUNTY: ["ACORN", "ATLANTIC", "BARTON", "BUSHWICK", "CHURCH", "CORNELIA", "DEXTER", "ELWOOD", 
+                "GEERY", "GILBERT", "HARRISON", "HEMLOCK", "INDIAN HEAD", "LAKESIDE", "LINCOLN", "MARTINGALE", "MAYFLOWER", 
+                "MEDIA", "NEWHAM", "NORMAN", "OLD TOWN", "PINCONE", "RAILROAD", "RANDALL", "ROE", "SALLY", "SHERYL CRESCENT", 
+                "SILVERLEAF", "TEED", "TEELE", "TRACY", "Marcus House", "The Children's Center at UCP", "UCP School"],
+            LIFESPIRE: ["Kaye Residence", "Rosedale House", "Ulster County", "Jumel St House", "South ave residence", 
+                "Margolis Residence"]
+        };
+
+        const clientSelect = document.getElementById("client");
+        const houseSelect = document.getElementById("house");
+
+        clientSelect.addEventListener("change", function() {
+            const selectedClient = this.value;
+            houseSelect.innerHTML = '<option value="">Select House</option>';
+
+            if (clientHouseMap[selectedClient]) {
+                clientHouseMap[selectedClient].forEach(house => {
+                    const option = document.createElement("option");
+                    option.value = house;
+                    option.textContent = house;
+                    houseSelect.appendChild(option);
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
