@@ -334,9 +334,21 @@
             input.addEventListener("change", function () {
                 if (!this.value) return;
                 
-                const selectedDate = new Date(this.value);
+
+                // This code block is removed because of date selection issues in different timezones
+                // const selectedDate = new Date(this.value);
+                // const selectedDay = selectedDate.getDay();
+
+
+                // This code block was replaced with above code block
+                const [year, month, dayOfMonth] = this.value.split("-").map(Number);
+
+                // Create date in LOCAL time (not UTC)
+                const selectedDate = new Date(year, month - 1, dayOfMonth);
                 const selectedDay = selectedDate.getDay();
                 
+
+
                 if (selectedDay !== dayIndexMap[day]) {
                     alert(`Please select a ${day} date only.`);
                     this.value = ""; // clear wrong date
