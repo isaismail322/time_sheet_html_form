@@ -219,35 +219,83 @@
         });
 
         // Handle form submission
+        // function handleSubmit(event) {
+        //     const employeeName = document.querySelector('input[name="employee_name"]').value;
+        //     const client = document.querySelector('select[name="client"]').value;
+        //     const house = document.querySelector('select[name="house"]').value;
+
+        //     if (!employeeName || !client || !house) {
+        //         event.preventDefault();
+        //         alert('Please fill in Employee Name, Client, and House before submitting.');
+        //         return false;
+        //     }
+
+        //     // Check if at least one day has data
+        //     let hasData = false;
+        //     days.forEach(day => {
+        //         const date = document.querySelector(`input[name="${day}_date"]`).value;
+        //         if (date) hasData = true;
+        //     });
+
+        //     if (!hasData) {
+        //         event.preventDefault();
+        //         alert('Please enter at least one day of timesheet data.');
+        //         return false;
+        //     }
+
+        //     return true; // Allow submission
+        // }
+        
+
+        // Version 2
         function handleSubmit(event) {
             const employeeName = document.querySelector('input[name="employee_name"]').value;
             const client = document.querySelector('select[name="client"]').value;
             const house = document.querySelector('select[name="house"]').value;
-
+            
             if (!employeeName || !client || !house) {
                 event.preventDefault();
                 alert('Please fill in Employee Name, Client, and House before submitting.');
                 return false;
             }
 
-            // Check if at least one day has data
-            let hasData = false;
-            days.forEach(day => {
-                const date = document.querySelector(`input[name="${day}_date"]`).value;
-                if (date) hasData = true;
-            });
+            let hasAtLeastOneDay = false;
 
-            if (!hasData) {
-                event.preventDefault();
+            for (const day of days) {
+
+                const date = document.querySelector(`input[name="${day}_date"]`).value;
+                const s1start = document.querySelector(`input[name="${day}_shift1_start"]`).value;
+                const s1end = document.querySelector(`input[name="${day}_shift1_end"]`).value;
+                const s2start = document.querySelector(`input[name="${day}_shift2_start"]`).value;
+                const s2end = document.querySelector(`input[name="${day}_shift2_end"]`).value;
+
+                const anyTimeFilled = s1start || s1end || s2start || s2end;
+
+                // If time entered but no date
+                if (anyTimeFilled && !date) {
+                    alert(`Please select a date for ${day} because you entered shift times.`);
+                    event.preventDefault();
+                    return false;
+                }
+
+                if (date) {
+                    hasAtLeastOneDay = true;
+                }
+            }
+
+            if (!hasAtLeastOneDay) {
                 alert('Please enter at least one day of timesheet data.');
+                event.preventDefault();
                 return false;
             }
 
-            return true; // Allow submission
+            return true;
         }
 
+
+
         // Generate days dynamically
-        const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
 
         const container = document.getElementById('daysContainer');
 
@@ -385,7 +433,7 @@
                 "Bellrose IRA", "Bloomberg", "Cunningham", "Dickson Goodman", "Greenberg IRA", "Hirsch IRA", "Hunter IRA",
                 "Kraus", "Malozemoff", "Manhattan", "Mayflower IRA", "North Hills", "Pembroke", "Peterson residence",
                 "Rupert Towers IRA", "Striar IRA", "Tysens Lane IRA", "Union Tpke IRA", "Presbyterian Hospital", "Fierstein",
-                "Rossi IRA", "Jamaica Hospital", "Kensington IRA"
+                "Rossi IRA", "Jamaica Hospital", "Kensington IRA", "East Tenafly IRA", "Hirsch Hillside Manor", "Bronx Apt IRA"
             ],
             AHRC_SUFFOLK: ["Waverly IRA", "Westhampton IRA", "Hamilton IRA", "Old field", "Westhampton ICF", "Shirley IRA", 
                 "Roanoke", "Tupper IRA", "Bellport IRA", "CENTEREACH", "Hawthorne", "Oakdale 2 IRA", "Mount Sinai", 
@@ -409,31 +457,51 @@
         const clientSelect = document.getElementById("client");
         const houseSelect = document.getElementById("house");
 
-        clientSelect.addEventListener("change", function() {
-            const selectedClient = this.value;
-            houseSelect.innerHTML = '<option value="">Select House</option>';
+        // clientSelect.addEventListener("change", function() {
+        //     const selectedClient = this.value;
+        //     houseSelect.innerHTML = '<option value="">Select House</option>';
 
-            if (clientHouseMap[selectedClient]) {
-                clientHouseMap[selectedClient].forEach(house => {
+        //     if (clientHouseMap[selectedClient]) {
+        //         clientHouseMap[selectedClient].forEach(house => {
+        //             const option = document.createElement("option");
+        //             option.value = house;
+        //             option.textContent = house;
+        //             houseSelect.appendChild(option);
+        //         });
+        //     }
+        // });
+        function populateHouses() {
+
+            const selectedClient = clientSelect.value;
+
+            // clear existing options
+            houseSelect.innerHTML = "";
+
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.textContent = "Select House";
+            houseSelect.appendChild(defaultOption);
+
+            if (!selectedClient) return;
+
+            const houses = clientHouseMap[selectedClient];
+
+            if (houses) {
+                houses.forEach(house => {
                     const option = document.createElement("option");
                     option.value = house;
                     option.textContent = house;
                     houseSelect.appendChild(option);
                 });
             }
-        });
+        }
+        // Populate when client changes
+        clientSelect.addEventListener("change", populateHouses);
+
+        // Populate when page is loaded or navigated back
+        window.addEventListener("pageshow", populateHouses);
     </script>
 
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
