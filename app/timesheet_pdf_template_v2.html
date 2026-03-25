@@ -18,7 +18,7 @@
             background: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
@@ -70,36 +70,63 @@
             opacity: 1;
         }
 
-        input:focus, select:focus {
+        input:focus,
+        select:focus {
             outline: none;
             border-color: #007bff;
             box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
         }
 
         .day {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-top: 15px;
-            border-radius: 6px;
-            background: #fafafa;
+            border: 1px solid rgba(15, 23, 42, 0.1);
+            padding: 20px;
+            margin-top: 18px;
+            border-radius: 16px;
+            background: linear-gradient(180deg, #ffffff, #f9fbff);
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .day:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 28px rgba(15, 23, 42, 0.12);
         }
 
         .day h3 {
-            margin: 0 0 15px 0;
-            color: #007bff;
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 8px;
+            margin: 0 0 18px 0;
+            color: #1d4ed8;
+            font-size: 20px;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+            padding-bottom: 10px;
         }
 
         .row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            align-items: flex-start;
         }
 
-        .row > div {
-            flex: 1;
-            min-width: 200px;
+        .row>div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field-block {
+            margin-bottom: 16px;
+        }
+
+        .time-input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .time-input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .second-shift {
@@ -109,6 +136,7 @@
             padding: 15px;
             border-radius: 4px;
             border-left: 3px solid #007bff;
+            box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.2);
         }
 
         .checkbox-label {
@@ -127,16 +155,23 @@
 
         button[type="submit"] {
             margin-top: 30px;
-            padding: 14px;
-            font-size: 16px;
+            padding: 16px;
+            font-size: 17px;
             width: 100%;
-            background: #007bff;
+            background: linear-gradient(90deg, #2563eb, #4f46e5);
             color: #fff;
             border: none;
-            border-radius: 6px;
+            border-radius: 12px;
             cursor: pointer;
             font-weight: bold;
-            transition: background 0.3s;
+            letter-spacing: 0.5px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 24px rgba(37, 99, 235, 0.35);
         }
 
         button[type="submit"]:hover {
@@ -150,38 +185,341 @@
             font-weight: normal;
         }
 
+
+
+        .form-header {
+            margin-bottom: 24px;
+            text-align: left;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.3);
+        }
+
+        .form-header-brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-logo {
+            width: 15%;
+            height: 15%;
+            object-fit: contain;
+            border-radius: 10px;
+            border: 2px solid rgba(37, 99, 235, 0.2);
+            background: #fff;
+            padding: 8px;
+        }
+
+        .brand-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0d4ad7;
+        }
+
         .employee-section {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 6px;
+            background: linear-gradient(180deg, #ffffff, #eef2ff);
+            padding: 20px;
+            border-radius: 18px;
             margin-bottom: 20px;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.06);
+            position: relative;
+        }
+
+        .employee-section::after {
+            content: '';
+            position: absolute;
+            inset: 12px;
+            border-radius: 14px;
+            border: 1px dashed rgba(37, 99, 235, 0.15);
+            pointer-events: none;
+        }
+
+        .client-house-section {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 16px;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+            margin-top: 18px;
+        }
+
+        .employee-section-top {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .employee-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .employee-help-text {
+            font-size: 13px;
+            color: #334155;
+            min-width: 200px;
+        }
+
+        .employee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            width: 100%;
+        }
+
+        .employee-input-card {
+            background: #fff;
+            border: 1px solid #dfe7f5;
+            border-radius: 12px;
+            padding: 14px 16px;
+            position: relative;
+            overflow: hidden;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+
+        .employee-input-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.03), transparent 65%);
+            pointer-events: none;
+        }
+
+        .employee-input-card label {
+            font-size: 13px;
+            color: #475569;
+            margin-bottom: 4px;
+            font-weight: 600;
+            display: block;
+        }
+
+        .employee-input-card input {
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5f5;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 15px;
+            background: #f8fafc;
+        }
+
+        .employee-input-card input:focus {
+            border-color: #2563eb;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .highlight-invalid {
+            animation: pulse-highlight 1.6s ease-in-out;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.5);
+            border-color: #ef4444;
+        }
+
+        @keyframes pulse-highlight {
+            0% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+            }
+            70% {
+                box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+
+        @media (max-width: 640px) {
+            form {
+                padding: 16px;
+            }
+
+            .employee-section {
+                padding: 16px;
+            }
+
+            .employee-section::after {
+                inset: 8px;
+            }
+
+            .employee-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .time-input-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section-heading {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-heading::before {
+            content: "";
+            width: 32px;
+            height: 4px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #007bff, #00b4ff);
+        }
+
+        .client-house-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+
+        .input-card {
+            background: #fdfefe;
+            border: 1px solid #e4e8f1;
+            border-radius: 8px;
+            padding: 12px 14px 10px;
+        }
+
+        .input-card label {
+            font-size: 13px;
+            color: #4b5563;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .client-house-section .input-card input {
+            border: 1px solid #cbd5f5;
+            border-radius: 8px;
+            padding: 10px 12px;
+            background: #f8fafc;
+            box-sizing: border-box;
+            box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.05);
+            font-size: 15px;
+            width: 100%;
+        }
+
+        .client-house-section .input-card input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .client-house-section .input-hint {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #637381;
+        }
+
+        .comments-section {
+            margin-top: 28px;
+            padding: 18px;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            background: #fdfdff;
+            box-shadow: 0 8px 15px rgba(15, 23, 42, 0.07);
+        }
+
+        .comments-section label {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .comments-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #cbd5f5;
+            font-size: 15px;
+            background: #f8fafc;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            resize: vertical;
+        }
+
+        .comments-textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+            background: #fff;
+            outline: none;
         }
     </style>
 </head>
 
 <body>
-
-    <form method="POST" action="https://gigsforce.com/webhook/081ebf3c-ba42-4c26-bcd3-ca5e88b3b624" onsubmit="return handleSubmit(event)">
-        <h2>📋 Employee Details</h2>
-        <div class="employee-section">
-            <label>Employee Name</label>
-            <input type="text" name="employee_name" placeholder="Enter full name" required>
-
-            <label>Client Name</label>
-            <select id="client" name="client" required>
-                <option value="">Select Client</option>
-                <option value="AHRC_NYC">AHRC NYC</option>
-                <option value="AHRC_SUFFOLK">AHRC Suffolk</option>
-                <option value="UCP_HOUSES_SUFFOLK_COUNTY">UCP Houses Suffolk County</option>
-                <option value="LIFESPIRE">Lifespire</option>
-                <option value="DDI">Developmental Disabilities Institute (DDI)</option>
-            </select>
-
-            <label>House Name</label>
-            <select id="house" name="house" required>
-                <option value="">First select a client</option>
-            </select>
+    <form method="POST" action="https://gigsforce.com/webhook/081ebf3c-ba42-4c26-bcd3-ca5e88b3b624"
+        onsubmit="return handleSubmit(event)">
+        <input type="hidden" name="user_timezone" id="userTimezone">
+        <input type="hidden" name="timezone_offset_minutes" id="timezoneOffsetMinutes">
+        <input type="hidden" name="normalized_week_entries" id="normalizedWeekData">
+        <div class="form-header">
+            <div class="form-header-brand">
+                <img src="atc_logo.jpg" alt="ATC Healthcare logo" class="brand-logo">
+                <div class="brand-details">
+                    <span class="logo-text">ATC Healthcare</span>
+                </div>
+            </div>
         </div>
+
+        <h2>📋 Employee Details</h2>
+        <div class="employee-section-top">
+            <div class="employee-section-title">Welcome back, please confirm your profile</div>
+            <p class="employee-help-text">Fields marked here connect you with your approved client houses so payroll
+                stays accurate.</p>
+        </div>
+        <div class="employee-grid">
+            <div class="employee-input-card">
+                <label for="employeeNameInput">Employee Name</label>
+                <input id="employeeNameInput" type="text" name="employee_name" placeholder="Enter full name" required
+                    autocomplete="name">
+                <div class="input-hint">Use your legal name as shown on payroll records.</div>
+            </div>
+            <div class="employee-input-card">
+                <label for="positionInput">Position</label>
+                <input id="positionInput" type="text" name="position_title"
+                    placeholder="Enter position title (optional)" autocomplete="organization-title">
+                <div class="input-hint">Optional, helps us route your shift to the right team.</div>
+            </div>
+        </div>
+
+        <div class="client-house-section">
+            <div class="section-heading">Client &amp; House Selection</div>
+            <div class="client-house-grid">
+                <div class="input-card">
+                    <label for="clientInput">Client Name</label>
+                    <input list="client-options" id="clientInput" placeholder="Start typing to search clients"
+                        autocomplete="off" required>
+                    <div class="input-hint">Start typing to search through available clients.</div>
+                </div>
+                <div class="input-card">
+                    <label for="houseInput">House Name</label>
+                    <input list="house-options" name="house" id="houseInput" placeholder="First select a client"
+                        autocomplete="off" disabled required>
+                    <div class="input-hint">Choose the house associated with the selected client.</div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="client" id="clientHidden">
+        <datalist id="client-options"></datalist>
+        <datalist id="house-options"></datalist>
+
 
         <h2>📅 Weekly Shifts</h2>
         <p style="color: #666; font-size: 14px; margin-top: 5px;">
@@ -190,89 +528,370 @@
 
         <div id="daysContainer"></div>
 
+        <div class="comments-section">
+            <label for="commentsTextarea">📝 Additional Notes</label>
+            <textarea id="commentsTextarea" name="comments" class="comments-textarea"
+                placeholder="Share any relevant notes about this week, such as shift changes, mileage, or special instructions."></textarea>
+            <div class="input-hint" style="margin-top: 8px;">Optional—our team reviews comments before payroll
+                submission.</div>
+        </div>
+
         <button type="submit">✓ Submit Timesheet</button>
     </form>
 
     <script>
-        // Prevent Enter key from submitting the form
-        document.addEventListener('DOMContentLoaded', function() {
+        const clients = [
+            { value: 'AHRC_NYC', label: 'AHRC NYC' },
+            { value: 'AHRC_SUFFOLK', label: 'AHRC Suffolk' },
+            { value: 'UCP_HOUSES_SUFFOLK_COUNTY', label: 'UCP Houses Suffolk County' },
+            { value: 'LIFESPIRE', label: 'Lifespire' },
+            { value: 'DDI', label: 'Developmental Disabilities Institute (DDI)' }
+        ];
+
+        const clientHouseMap = {
+            AHRC_NYC: ["400 Ocean Pkwy", "Gruenstein", "New Gotham", "Harbor", "Munson IRA", "34th st", "Silvercrest Center",
+                "Laguna Lane IRA", "Lander IRA", "31st Drive", "The Grand Rehabilitation and Nursing", "Chicquor IRA",
+                "204th St IRA", "95th St", "Rubin residence", "Barnabas Hospital", "Fresh Meadow Lane", "Fairfield",
+                "Bober IRA", "Agovino ICF", "Jacobi Hospital", "Isaacson", "Wilson IRA", "169th IRA", "Crisis",
+                "Vanderbilt Rehabilitation and Care Center", "Carubia IRA", "Glen oaks IRA", "Midwood", "Vyse",
+                "Netherland IRA", "College Point IRA", "Fineson IRA", "Gus Jacobs IRA", "159th IRA", "10th St IRA",
+                "163rd St", "186th St", "194th St IRA", "213th Bayside IRA", "58th IRA", "79th IRA", "Armstrong IRA",
+                "Bellrose IRA", "Bloomberg", "Cunningham", "Dickson Goodman", "Greenberg IRA", "Hirsch IRA", "Hunter IRA",
+                "Kraus", "Malozemoff", "Manhattan", "Mayflower IRA", "North Hills", "Pembroke", "Peterson residence",
+                "Rupert Towers IRA", "Striar IRA", "Tysens Lane IRA", "Union Tpke IRA", "Presbyterian Hospital", "Fierstein",
+                "Rossi IRA", "Jamaica Hospital", "Kensington IRA", "East Tenafly IRA", "Hirsch Hillside Manor", "Bronx Apt IRA"
+            ],
+            AHRC_SUFFOLK: ["Waverly IRA", "Westhampton IRA", "Hamilton IRA", "Old field", "Westhampton ICF", "Shirley IRA",
+                "Roanoke", "Tupper IRA", "Bellport IRA", "CENTEREACH", "Hawthorne", "Oakdale 2 IRA", "Mount Sinai",
+                "Oakdale 1", "CENTRAL ISLIP", "Yaphank", "Bay Shore", "CORAM", "Holbrook", "DIX HILLS", "Southold"],
+            UCP_HOUSES_SUFFOLK_COUNTY: ["ACORN", "ATLANTIC", "BARTON", "BUSHWICK", "CHURCH", "CORNELIA", "DEXTER", "ELWOOD",
+                "GEERY", "GILBERT", "HARRISON", "HEMLOCK", "INDIAN HEAD", "LAKESIDE", "LINCOLN", "MARTINGALE", "MAYFLOWER",
+                "MEDIA", "NEWHAM", "NORMAN", "OLD TOWN", "PINCONE", "RAILROAD", "RANDALL", "ROE", "SALLY", "SHERYL CRESCENT",
+                "SILVERLEAF", "TEED", "TEELE", "TRACY", "Marcus House", "The Children's Center at UCP", "UCP School"],
+            LIFESPIRE: ["Kaye Residence", "Rosedale House", "Ulster County", "Jumel St House", "South ave residence",
+                "Margolis Residence"],
+            DDI: ["Dorsett IRA", "Ridge IRA", "Sayville ICF", "Spring Meadow", "Don Lane IRA", "Edgar Dr IRA", "Sagamore IRA",
+                "Maridon Lane IRA", "Leslie Lane Residence", "Juniper Court Residence", "Chestnut Residant ", "Lake Avenue ",
+                "Plymouth House", "Callahan residence ", "Blydenburgh", "Avalon house", "Birchwood house", "Vanderbilt House ",
+                "Gardiner", "Whitman", "Mount Sinai Ave IRA", "Stony Hollow", "Greenlawn", "Browing Drive", "Spencer Ln", "Bellmore",
+                "QUINTUCK IRA", "CHILDREN DAY PROGRAM (Smithtown Campus)", "CHILDREN DAY PROGRAM (Huntington Campus)",
+                "CHILDREN DAY PROGRAM (Medford Campus)", "CHILDREN DAY PROGRAM (Ronkonkoma Campus)", "Adams Avenue Day Hab",
+                "Church Street Day Hab", "Huntington Day Hab", "Lake Avenue Day Hab", "Meadow Glen Day Hab", "Medford Day Hab ",
+                "Plainview Day Hab", "Riverhead Day Hab", "Main Street Day Hab", "Residential"]
+        };
+
+        let selectedHouseList = [];
+
+        const clientInput = document.getElementById('clientInput');
+        const clientHidden = document.getElementById('clientHidden');
+        const clientDatalist = document.getElementById('client-options');
+        const houseInput = document.getElementById('houseInput');
+        const houseDatalist = document.getElementById('house-options');
+        const userTimezoneField = document.getElementById('userTimezone');
+        const timezoneOffsetField = document.getElementById('timezoneOffsetMinutes');
+        const normalizedWeekDataField = document.getElementById('normalizedWeekData');
+
+        document.addEventListener('DOMContentLoaded', function () {
             const form = document.querySelector('form');
-            
-            // Prevent Enter key submission on all inputs except submit button
-            form.addEventListener('keydown', function(e) {
+
+            form.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter' && e.target.type !== 'submit') {
                     e.preventDefault();
                     return false;
                 }
             });
 
-            // Alternative: Listen on all inputs
             const inputs = form.querySelectorAll('input, select');
             inputs.forEach(input => {
-                input.addEventListener('keypress', function(e) {
+                input.addEventListener('keypress', function (e) {
                     if (e.key === 'Enter') {
                         e.preventDefault();
                         return false;
                     }
                 });
             });
+
+            initializeClientHouseControls();
+            registerHighlightClearing();
+            updateTimezoneMetadata();
         });
 
-        // Handle form submission
-        // function handleSubmit(event) {
-        //     const employeeName = document.querySelector('input[name="employee_name"]').value;
-        //     const client = document.querySelector('select[name="client"]').value;
-        //     const house = document.querySelector('select[name="house"]').value;
+        function initializeClientHouseControls() {
+            clientHidden.value = '';
 
-        //     if (!employeeName || !client || !house) {
-        //         event.preventDefault();
-        //         alert('Please fill in Employee Name, Client, and House before submitting.');
-        //         return false;
-        //     }
+            clientInput.addEventListener('input', handleClientInput);
+            clientInput.addEventListener('blur', handleClientInput);
+            houseInput.addEventListener('input', () => populateHouseDatalist(houseInput.value));
+            gateHouseInput(false);
+        }
 
-        //     // Check if at least one day has data
-        //     let hasData = false;
-        //     days.forEach(day => {
-        //         const date = document.querySelector(`input[name="${day}_date"]`).value;
-        //         if (date) hasData = true;
-        //     });
+        function populateClientDatalist(queryValue) {
+            clientDatalist.innerHTML = '';
+            const search = queryValue.trim().toLowerCase();
+            if (!search) {
+                return;
+            }
 
-        //     if (!hasData) {
-        //         event.preventDefault();
-        //         alert('Please enter at least one day of timesheet data.');
-        //         return false;
-        //     }
+            clients
+                .filter(client => client.label.toLowerCase().startsWith(search))
+                .forEach(client => {
+                    const option = document.createElement('option');
+                    option.value = client.label;
+                    clientDatalist.appendChild(option);
+                });
+        }
 
-        //     return true; // Allow submission
-        // }
-        
+        function populateHouseDatalist(queryValue) {
+            houseDatalist.innerHTML = '';
+            const search = queryValue.trim().toLowerCase();
+            if (!search || !selectedHouseList.length) {
+                return;
+            }
 
-        // Version 2
+            selectedHouseList
+                .filter(house => house.toLowerCase().startsWith(search))
+                .forEach(house => {
+                    const option = document.createElement('option');
+                    option.value = house;
+                    houseDatalist.appendChild(option);
+                });
+        }
+
+        function handleClientInput() {
+            const currentValue = clientInput.value;
+            populateClientDatalist(currentValue);
+            const query = currentValue.trim().toLowerCase();
+            const entry = clients.find(client => client.label.toLowerCase() === query);
+
+            if (entry) {
+                clientHidden.value = entry.value;
+                updateHouseDatalist(entry.value);
+            } else {
+                clientHidden.value = '';
+                selectedHouseList = [];
+                gateHouseInput(false);
+                houseDatalist.innerHTML = '';
+                houseInput.value = '';
+            }
+        }
+
+        function updateHouseDatalist(clientKey) {
+            const houses = clientHouseMap[clientKey] || [];
+            selectedHouseList = houses.slice();
+            gateHouseInput(houses.length > 0);
+            populateHouseDatalist(houseInput.value);
+        }
+
+        let activeInvalidField = null;
+
+        function gateHouseInput(enabled) {
+            houseInput.disabled = !enabled;
+            houseInput.placeholder = enabled ? 'Start typing to search houses' : 'Select a client first';
+            if (!enabled) {
+                houseInput.value = '';
+            }
+        }
+
+        function clearFieldHighlight(field) {
+            if (!field) {
+                return;
+            }
+            field.classList.remove('highlight-invalid');
+            if (activeInvalidField === field) {
+                activeInvalidField = null;
+            }
+        }
+
+        function clearActiveHighlight() {
+            if (activeInvalidField) {
+                activeInvalidField.classList.remove('highlight-invalid');
+                activeInvalidField = null;
+            }
+        }
+
+        function highlightInvalidField(field) {
+            if (!field) {
+                return;
+            }
+            clearActiveHighlight();
+            field.classList.add('highlight-invalid');
+            activeInvalidField = field;
+        }
+
+        function scrollAndHighlightField(field) {
+            if (!field) {
+                return;
+            }
+            highlightInvalidField(field);
+            field.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+            if (typeof field.focus === 'function') {
+                field.focus({
+                    preventScroll: true
+                });
+            }
+        }
+
+        function registerHighlightClearing() {
+            const allFields = document.querySelectorAll('input, select, textarea');
+            allFields.forEach(field => {
+                field.addEventListener('input', () => clearFieldHighlight(field));
+                field.addEventListener('change', () => clearFieldHighlight(field));
+            });
+        }
+
+        function updateTimezoneMetadata() {
+            if (!userTimezoneField && !timezoneOffsetField) {
+                return;
+            }
+
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+            const offsetMinutes = new Date().getTimezoneOffset();
+
+            if (userTimezoneField) {
+                userTimezoneField.value = timezone;
+            }
+
+            if (timezoneOffsetField) {
+                timezoneOffsetField.value = offsetMinutes;
+            }
+        }
+
+        function toUtcIso(dateValue, timeValue) {
+            if (!dateValue || !timeValue) {
+                return null;
+            }
+
+            const combined = `${dateValue}T${timeValue}`;
+            const localDateTime = new Date(combined);
+
+            return Number.isNaN(localDateTime.getTime()) ? null : localDateTime.toISOString();
+        }
+
+        function collectShiftPayload(day, shiftNumber, dateValue) {
+            const startField = document.querySelector(`input[name="${day}_shift${shiftNumber}_start"]`);
+            const endField = document.querySelector(`input[name="${day}_shift${shiftNumber}_end"]`);
+
+            if (!startField || !endField) {
+                return null;
+            }
+
+            const startLocal = startField.value;
+            const endLocal = endField.value;
+
+            if (!startLocal && !endLocal) {
+                return null;
+            }
+
+            return {
+                shiftNumber,
+                startLocal: startLocal || null,
+                endLocal: endLocal || null,
+                startUtc: toUtcIso(dateValue, startLocal),
+                endUtc: toUtcIso(dateValue, endLocal)
+            };
+        }
+
+        function buildNormalizedWeekPayload() {
+            const entries = [];
+
+            for (const day of days) {
+                const dateField = document.querySelector(`input[name="${day}_date"]`);
+
+                if (!dateField || !dateField.value) {
+                    continue;
+                }
+
+                const entry = {
+                    day,
+                    localDate: dateField.value,
+                    shifts: []
+                };
+
+                const shift1 = collectShiftPayload(day, 1, dateField.value);
+                const shift2 = collectShiftPayload(day, 2, dateField.value);
+
+                if (shift1) {
+                    entry.shifts.push(shift1);
+                }
+
+                if (shift2) {
+                    entry.shifts.push(shift2);
+                }
+
+                entries.push(entry);
+            }
+
+            return {
+                timezone: userTimezoneField ? userTimezoneField.value || 'UTC' : 'UTC',
+                timezoneOffsetMinutes: timezoneOffsetField ? Number(timezoneOffsetField.value) : new Date().getTimezoneOffset(),
+                entries
+            };
+        }
+
+        function isShiftPartiallyFilled(start, end) {
+            return Boolean((start && !end) || (!start && end));
+        }
+
         function handleSubmit(event) {
-            const employeeName = document.querySelector('input[name="employee_name"]').value;
-            const client = document.querySelector('select[name="client"]').value;
-            const house = document.querySelector('select[name="house"]').value;
-            
-            if (!employeeName || !client || !house) {
+            const employeeNameInput = document.querySelector('input[name="employee_name"]');
+            const employeeName = employeeNameInput.value.trim();
+            const client = clientHidden.value;
+            const houseInputField = document.querySelector('input[name="house"]');
+            const house = houseInputField.value.trim();
+            updateTimezoneMetadata();
+
+            if (!employeeName) {
                 event.preventDefault();
-                alert('Please fill in Employee Name, Client, and House before submitting.');
+                scrollAndHighlightField(employeeNameInput);
+                alert('Please provide your Employee Name before submitting.');
+                return false;
+            }
+
+            if (!client) {
+                event.preventDefault();
+                scrollAndHighlightField(clientInput);
+                alert('Please select a Client from the list before submitting.');
+                return false;
+            }
+
+            if (!house) {
+                event.preventDefault();
+                scrollAndHighlightField(houseInputField);
+                alert('Please select a House from the list before submitting.');
+                return false;
+            }
+
+            const houseIsValid = selectedHouseList.some(h => h.toLowerCase() === house.toLowerCase());
+
+            if (!houseIsValid) {
+                event.preventDefault();
+                scrollAndHighlightField(houseInputField);
+                alert('Please select a valid house from the suggestions.');
                 return false;
             }
 
             let hasAtLeastOneDay = false;
 
             for (const day of days) {
-
-                const date = document.querySelector(`input[name="${day}_date"]`).value;
-                const s1start = document.querySelector(`input[name="${day}_shift1_start"]`).value;
-                const s1end = document.querySelector(`input[name="${day}_shift1_end"]`).value;
-                const s2start = document.querySelector(`input[name="${day}_shift2_start"]`).value;
-                const s2end = document.querySelector(`input[name="${day}_shift2_end"]`).value;
+                const dateField = document.querySelector(`input[name="${day}_date"]`);
+                const s1startField = document.querySelector(`input[name="${day}_shift1_start"]`);
+                const s1endField = document.querySelector(`input[name="${day}_shift1_end"]`);
+                const s2startField = document.querySelector(`input[name="${day}_shift2_start"]`);
+                const s2endField = document.querySelector(`input[name="${day}_shift2_end"]`);
+                const doubleShiftEnabled = document.querySelector(`input[name="${day}_double_shift"]`).checked;
+                const date = dateField.value;
+                const s1start = s1startField.value;
+                const s1end = s1endField.value;
+                const s2start = s2startField.value;
+                const s2end = s2endField.value;
 
                 const anyTimeFilled = s1start || s1end || s2start || s2end;
 
-                // If time entered but no date
                 if (anyTimeFilled && !date) {
+                    scrollAndHighlightField(dateField);
                     alert(`Please select a date for ${day} because you entered shift times.`);
                     event.preventDefault();
                     return false;
@@ -281,12 +900,37 @@
                 if (date) {
                     hasAtLeastOneDay = true;
                 }
+
+                if (isShiftPartiallyFilled(s1start, s1end)) {
+                    const missingShiftField = !s1start ? s1startField : s1endField;
+                    scrollAndHighlightField(missingShiftField);
+                    alert(`For ${day}, please provide both start and end times for Shift 1.`);
+                    event.preventDefault();
+                    return false;
+                }
+
+                if (doubleShiftEnabled || s2start || s2end) {
+                    if (isShiftPartiallyFilled(s2start, s2end)) {
+                        const missingShiftField = !s2start ? s2startField : s2endField;
+                        scrollAndHighlightField(missingShiftField);
+                        alert(`For ${day}, please provide both start and end times for Shift 2.`);
+                        event.preventDefault();
+                        return false;
+                    }
+                }
             }
 
             if (!hasAtLeastOneDay) {
+                const targetDateField = document.querySelector(`input[name="${days[0]}_date"]`);
                 alert('Please enter at least one day of timesheet data.');
+                scrollAndHighlightField(targetDateField);
                 event.preventDefault();
                 return false;
+            }
+
+            if (normalizedWeekDataField) {
+                const normalizedPayload = buildNormalizedWeekPayload();
+                normalizedWeekDataField.value = JSON.stringify(normalizedPayload);
             }
 
             return true;
@@ -294,8 +938,7 @@
 
 
 
-        // Generate days dynamically
-        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
         const container = document.getElementById('daysContainer');
 
@@ -305,16 +948,18 @@
             dayDiv.innerHTML = `
                 <h3>${day}</h3>
 
-                <label>Date</label>
-                <input 
-                    type="date" 
-                    name="${day}_date"
-                    placeholder="MM/DD/YYYY or use calendar"
-                >
-                <div class="input-hint">Type manually (e.g., 01/20/2026) or click calendar icon</div>
+                <div class="field-block">
+                    <label>Date</label>
+                    <input 
+                        type="date" 
+                        name="${day}_date"
+                        placeholder="MM/DD/YYYY or use calendar"
+                    >
+                    <div class="input-hint">Type manually (e.g., 01/20/2026) or click calendar icon</div>
+                </div>
 
-                <div class="row">
-                    <div>
+                <div class="time-input-grid">
+                    <div class="time-input-wrapper">
                         <label>Shift 1 Start Time</label>
                         <input 
                             type="time" 
@@ -323,7 +968,7 @@
                         >
                         <div class="input-hint">Type (e.g., 08:00 AM) or use clock</div>
                     </div>
-                    <div>
+                    <div class="time-input-wrapper">
                         <label>Shift 1 End Time</label>
                         <input 
                             type="time" 
@@ -341,8 +986,8 @@
 
                 <div class="second-shift" id="${day}_second_shift">
                     <strong style="display: block; margin-bottom: 10px; color: #007bff;">Second Shift</strong>
-                    <div class="row">
-                        <div>
+                    <div class="time-input-grid">
+                        <div class="time-input-wrapper">
                             <label>Shift 2 Start Time</label>
                             <input 
                                 type="time" 
@@ -351,7 +996,7 @@
                                 disabled
                             >
                         </div>
-                        <div>
+                        <div class="time-input-wrapper">
                             <label>Shift 2 End Time</label>
                             <input 
                                 type="time" 
@@ -373,42 +1018,31 @@
             Wednesday: 3,
             Thursday: 4,
             Friday: 5,
-            Saturday: 6};
+            Saturday: 6
+        };
 
         days.forEach(day => {
             const input = document.querySelector(`input[name="${day}_date"]`);
-            
+
             input.addEventListener("change", function () {
                 if (!this.value) return;
-                
 
-                // This code block is removed because of date selection issues in different timezones
-                // const selectedDate = new Date(this.value);
-                // const selectedDay = selectedDate.getDay();
-
-
-                // This code block was replaced with above code block
                 const [year, month, dayOfMonth] = this.value.split("-").map(Number);
-
-                // Create date in LOCAL time (not UTC)
                 const selectedDate = new Date(year, month - 1, dayOfMonth);
                 const selectedDay = selectedDate.getDay();
-                
-
 
                 if (selectedDay !== dayIndexMap[day]) {
                     alert(`Please select a ${day} date only.`);
-                    this.value = ""; // clear wrong date
-                    }
-                });
-            });    
+                    this.value = "";
+                }
+            });
+        });
 
 
-        // Toggle second shift
         function toggleSecondShift(checkbox, day) {
             const secondShift = document.getElementById(`${day}_second_shift`);
             const inputs = secondShift.querySelectorAll('input');
-            
+
             if (checkbox.checked) {
                 secondShift.style.display = 'block';
                 inputs.forEach(input => input.disabled = false);
@@ -420,86 +1054,6 @@
                 });
             }
         }
-
-        // Client-House mapping
-        const clientHouseMap = {
-            AHRC_NYC: ["400 Ocean Pkwy", "Gruenstein", "New Gotham", "Harbor", "Munson IRA", "34th st", "Silvercrest Center",
-                "Laguna Lane IRA", "Lander IRA", "31st Drive", "The Grand Rehabilitation and Nursing", "Chicquor IRA",
-                "204th St IRA", "95th St", "Rubin residence", "Barnabas Hospital", "Fresh Meadow Lane", "Fairfield",
-                "Bober IRA", "Agovino ICF", "Jacobi Hospital", "Isaacson", "Wilson IRA", "169th IRA", "Crisis",
-                "Vanderbilt Rehabilitation and Care Center", "Carubia IRA", "Glen oaks IRA", "Midwood", "Vyse",
-                "Netherland IRA", "College Point IRA", "Fineson IRA", "Gus Jacobs IRA", "159th IRA", "10th St IRA",
-                "163rd St", "186th St", "194th St IRA", "213th Bayside IRA", "58th IRA", "79th IRA", "Armstrong IRA",
-                "Bellrose IRA", "Bloomberg", "Cunningham", "Dickson Goodman", "Greenberg IRA", "Hirsch IRA", "Hunter IRA",
-                "Kraus", "Malozemoff", "Manhattan", "Mayflower IRA", "North Hills", "Pembroke", "Peterson residence",
-                "Rupert Towers IRA", "Striar IRA", "Tysens Lane IRA", "Union Tpke IRA", "Presbyterian Hospital", "Fierstein",
-                "Rossi IRA", "Jamaica Hospital", "Kensington IRA", "East Tenafly IRA", "Hirsch Hillside Manor", "Bronx Apt IRA"
-            ],
-            AHRC_SUFFOLK: ["Waverly IRA", "Westhampton IRA", "Hamilton IRA", "Old field", "Westhampton ICF", "Shirley IRA", 
-                "Roanoke", "Tupper IRA", "Bellport IRA", "CENTEREACH", "Hawthorne", "Oakdale 2 IRA", "Mount Sinai", 
-                "Oakdale 1", "CENTRAL ISLIP", "Yaphank", "Bay Shore", "CORAM", "Holbrook", "DIX HILLS", "Southold"],
-            UCP_HOUSES_SUFFOLK_COUNTY: ["ACORN", "ATLANTIC", "BARTON", "BUSHWICK", "CHURCH", "CORNELIA", "DEXTER", "ELWOOD", 
-                "GEERY", "GILBERT", "HARRISON", "HEMLOCK", "INDIAN HEAD", "LAKESIDE", "LINCOLN", "MARTINGALE", "MAYFLOWER", 
-                "MEDIA", "NEWHAM", "NORMAN", "OLD TOWN", "PINCONE", "RAILROAD", "RANDALL", "ROE", "SALLY", "SHERYL CRESCENT", 
-                "SILVERLEAF", "TEED", "TEELE", "TRACY", "Marcus House", "The Children's Center at UCP", "UCP School"],
-            LIFESPIRE: ["Kaye Residence", "Rosedale House", "Ulster County", "Jumel St House", "South ave residence", 
-                "Margolis Residence"],
-            DDI: ["Dorsett IRA", "Ridge IRA", "Sayville ICF", "Spring Meadow", "Don Lane IRA", "Edgar Dr IRA", "Sagamore IRA", 
-            "Maridon Lane IRA", "Leslie Lane Residence", "Juniper Court Residence", "Chestnut Residant ", "Lake Avenue ", 
-            "Plymouth House", "Callahan residence ", "Blydenburgh", "Avalon house", "Birchwood house", "Vanderbilt House ", 
-            "Gardiner", "Whitman", "Mount Sinai Ave IRA", "Stony Hollow", "Greenlawn", "Browing Drive", "Spencer Ln", "Bellmore", 
-            "QUINTUCK IRA", "CHILDREN DAY PROGRAM (Smithtown Campus)", "CHILDREN DAY PROGRAM (Huntington Campus)", 
-            "CHILDREN DAY PROGRAM (Medford Campus)", "CHILDREN DAY PROGRAM (Ronkonkoma Campus)", "Adams Avenue Day Hab", 
-            "Church Street Day Hab", "Huntington Day Hab", "Lake Avenue Day Hab", "Meadow Glen Day Hab", "Medford Day Hab ", 
-            "Plainview Day Hab", "Riverhead Day Hab", "Main Street Day Hab", "Residential"]    
-        };
-
-        const clientSelect = document.getElementById("client");
-        const houseSelect = document.getElementById("house");
-
-        // clientSelect.addEventListener("change", function() {
-        //     const selectedClient = this.value;
-        //     houseSelect.innerHTML = '<option value="">Select House</option>';
-
-        //     if (clientHouseMap[selectedClient]) {
-        //         clientHouseMap[selectedClient].forEach(house => {
-        //             const option = document.createElement("option");
-        //             option.value = house;
-        //             option.textContent = house;
-        //             houseSelect.appendChild(option);
-        //         });
-        //     }
-        // });
-        function populateHouses() {
-
-            const selectedClient = clientSelect.value;
-
-            // clear existing options
-            houseSelect.innerHTML = "";
-
-            const defaultOption = document.createElement("option");
-            defaultOption.value = "";
-            defaultOption.textContent = "Select House";
-            houseSelect.appendChild(defaultOption);
-
-            if (!selectedClient) return;
-
-            const houses = clientHouseMap[selectedClient];
-
-            if (houses) {
-                houses.forEach(house => {
-                    const option = document.createElement("option");
-                    option.value = house;
-                    option.textContent = house;
-                    houseSelect.appendChild(option);
-                });
-            }
-        }
-        // Populate when client changes
-        clientSelect.addEventListener("change", populateHouses);
-
-        // Populate when page is loaded or navigated back
-        window.addEventListener("pageshow", populateHouses);
     </script>
 
 </body>
