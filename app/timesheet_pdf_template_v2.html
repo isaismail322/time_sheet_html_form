@@ -464,7 +464,7 @@
 </head>
 
 <body>
-    <form method="POST" action="https://gigsforce.com/webhook/081ebf3c-ba42-4c26-bcd3-ca5e88b3b624"
+    <form method="POST" action="https://gigsforce.com/webhook/081ebf3c-ba42-4c26-bcd3-ca5e88b3b625"
         onsubmit="return handleSubmit(event)">
         <input type="hidden" name="user_timezone" id="userTimezone">
         <input type="hidden" name="timezone_offset_minutes" id="timezoneOffsetMinutes">
@@ -1024,7 +1024,7 @@
         days.forEach(day => {
             const input = document.querySelector(`input[name="${day}_date"]`);
 
-            input.addEventListener("change", function () {
+            input.addEventListener("blur", function () {
                 if (!this.value) return;
 
                 const [year, month, dayOfMonth] = this.value.split("-").map(Number);
