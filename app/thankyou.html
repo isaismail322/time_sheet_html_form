@@ -167,6 +167,28 @@
             color: #e63946;
             font-weight: 700;
         }
+
+        .primary-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 14px auto 0;
+            padding: 14px 28px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #1d4ed8, #2563eb);
+            color: #fff;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 12px 20px rgba(37, 99, 235, 0.25);
+        }
+
+        .primary-action:hover,
+        .primary-action:focus-visible {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 24px rgba(37, 99, 235, 0.35);
+        }
     </style>
 </head>
 <body>
@@ -211,9 +233,11 @@
             <p class="contact-text">
                 If you have any questions or need to make a correction,<br>
                 please contact your branch office or email us at<br>
-                <a href="mailto:atcsuffolkcountystaff@atchealthcare.com">atcsuffolkcountystaff@atchealthcare.com</a>
-                <p class="contact-text"><a href="tel:+16313549494">(631) 354-9494</a></p>
+                <a href="mailto:atcsuffolkcountystaff@atchealthcare.com">atcsuffolkcountystaff@atchealthcare.com</a><br>
+                <a href="tel:+16313549494">(631) 354-9494</a>
             </p>
+
+            <a class="primary-action" href="timesheet_pdf_template_v2.html" aria-label="Submit another timesheet">Submit another timesheet</a>
         </div>
 
         <!-- Footer -->
