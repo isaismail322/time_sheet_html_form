@@ -1043,7 +1043,14 @@
 
         function applyCurrentWeekToDateFields() {
             const { start, end } = getCurrentWeekRange();
-            const minDate = toDateInputValue(start);
+            // const minDate = toDateInputValue(start);
+            // const maxDate = toDateInputValue(end);
+
+            // 👉 previous week start
+            const prevStart = new Date(start);
+            prevStart.setDate(prevStart.getDate() - 7);
+
+            const minDate = toDateInputValue(prevStart);
             const maxDate = toDateInputValue(end);
 
             days.forEach(day => {
