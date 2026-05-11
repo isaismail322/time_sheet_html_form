@@ -247,5 +247,22 @@
 
     </div>
 
+    <script>
+        (function () {
+            const link = document.querySelector('.primary-action');
+            if (!link) {
+                return;
+            }
+
+            const targetFile = 'timesheet_pdf_template_v2.html';
+            const currentPath = window.location.pathname;
+            const slashIndex = Math.max(currentPath.lastIndexOf('/'), 0);
+            const basePath = currentPath.substring(0, slashIndex + 1);
+
+            const branchLocation = `${window.location.origin}${basePath}${targetFile}`;
+            link.setAttribute('href', branchLocation);
+        })();
+    </script>
+
 </body>
 </html>
