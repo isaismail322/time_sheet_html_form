@@ -759,6 +759,17 @@
             }
         }
 
+        function buildBranchFileUrl(fileName) {
+            const currentPath = window.location.pathname;
+            const slashIndex = Math.max(currentPath.lastIndexOf('/'), 0);
+            const basePath = currentPath.substring(0, slashIndex + 1);
+            return `${window.location.origin}${basePath}${fileName}`;
+        }
+
+        function redirectToBranchThankYou() {
+            window.location.assign(buildBranchFileUrl('thankyou.html'));
+        }
+
         function toUtcIso(dateValue, timeValue) {
             if (!dateValue || !timeValue) {
                 return null;
@@ -835,7 +846,9 @@
             return Boolean((start && !end) || (!start && end));
         }
 
-        function handleSubmit(event) {
+        async function handleSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
             const employeeNameInput = document.querySelector('input[name="employee_name"]');
             const employeeName = employeeNameInput.value.trim();
             const client = clientHidden.value;
@@ -844,21 +857,18 @@
             updateTimezoneMetadata();
 
             if (!employeeName) {
-                event.preventDefault();
                 scrollAndHighlightField(employeeNameInput);
                 alert('Please provide your Employee Name before submitting.');
                 return false;
             }
 
             if (!client) {
-                event.preventDefault();
                 scrollAndHighlightField(clientInput);
                 alert('Please select a Client from the list before submitting.');
                 return false;
             }
 
             if (!house) {
-                event.preventDefault();
                 scrollAndHighlightField(houseInputField);
                 alert('Please select a House from the list before submitting.');
                 return false;
@@ -867,7 +877,6 @@
             const houseIsValid = selectedHouseList.some(h => h.toLowerCase() === house.toLowerCase());
 
             if (!houseIsValid) {
-                event.preventDefault();
                 scrollAndHighlightField(houseInputField);
                 alert('Please select a valid house from the suggestions.');
                 return false;
@@ -893,7 +902,6 @@
                 if (anyTimeFilled && !date) {
                     scrollAndHighlightField(dateField);
                     alert(`Please select a date for ${day} because you entered shift times.`);
-                    event.preventDefault();
                     return false;
                 }
 
@@ -905,7 +913,6 @@
                     const missingShiftField = !s1start ? s1startField : s1endField;
                     scrollAndHighlightField(missingShiftField);
                     alert(`For ${day}, please provide both start and end times for Shift 1.`);
-                    event.preventDefault();
                     return false;
                 }
 
@@ -914,7 +921,6 @@
                         const missingShiftField = !s2start ? s2startField : s2endField;
                         scrollAndHighlightField(missingShiftField);
                         alert(`For ${day}, please provide both start and end times for Shift 2.`);
-                        event.preventDefault();
                         return false;
                     }
                 }
@@ -924,7 +930,6 @@
                 const targetDateField = document.querySelector(`input[name="${days[0]}_date"]`);
                 alert('Please enter at least one day of timesheet data.');
                 scrollAndHighlightField(targetDateField);
-                event.preventDefault();
                 return false;
             }
 
@@ -933,7 +938,21 @@
                 normalizedWeekDataField.value = JSON.stringify(normalizedPayload);
             }
 
-            return true;
+            const formData = new FormData(form);
+            const submissionMethod = form.method || 'POST';
+
+            try {
+                await fetch(form.action, {
+                    method: submissionMethod.toUpperCase(),
+                    body: formData,
+                    mode: 'no-cors'
+                });
+            } catch (error) {
+                console.error('Timesheet submission request failed', error);
+            }
+
+            redirectToBranchThankYou();
+            return false;
         }
 
 
